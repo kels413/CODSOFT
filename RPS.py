@@ -71,3 +71,9 @@ except (EOFError,KeyboardInterrupt):
     # implement user login
     # implement a file to store the details of the user
     # implement forgetten password
+
+
+#activities to carry 2day 
+    # finish my email stuff
+    # read about alias and evnironment variable 
+    # make my git to periodcally update and push
