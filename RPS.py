@@ -11,8 +11,7 @@ try:
         userInput = input("Select choice (0, Rock), (1, Scissors), (2, paper) ")
       
         if not userInput:
-            print("Input cannot be empty")
-            break
+            continue
         else:
             if not isinstance(userInput, int):
                 try:
@@ -61,6 +60,7 @@ try:
 except (EOFError,KeyboardInterrupt):
     print("\nGoodbye!")
     exit(0)
+
 
 ###########ERROR HANDLING (edge cases)#########
     #check if the user input is greater than 2.
