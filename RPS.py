@@ -60,8 +60,6 @@ try:
 except (EOFError,KeyboardInterrupt):
     print("\nGoodbye!")
     exit(0)
-
-
 ###########ERROR HANDLING (edge cases)#########
     #check if the user input is greater than 2.
     #check when theres no input in the stdin
