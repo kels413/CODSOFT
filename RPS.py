@@ -22,9 +22,7 @@ def welcomeMessage():
 
 os.system('clear')
   
-def signUp():
-
-
+def signUp(): 
     count = 0
     firstName = input("firstName: ").title()
     lastName = input("lasttName: ").title()
@@ -74,13 +72,27 @@ def signUp():
 
     filePath.close()
 
+    # generating username.
+
+    # dividedPhoneNumber = phoneNumber / 3
+
+    userNameList= [firstName, lastName, phoneNumber]
+
+    userName = "".join(userNameList)
+
+    print("your username is: ", userName)
+
 
 
 #Login Message
 
 
 def userLogin():
-    print("GOD IS THE GREATEST")
+    pass
+
+
+def validateUserLogin():
+    pass
 
 
 def RPS():
@@ -145,7 +157,6 @@ def RPS():
 if __name__ == "__main__":
     welcomeMessage()
     signUp()
-    print(id(signUp))
     try:
         print("want to login to your Account? ")
         loginInput = int(input("(1.Login), (ctrl + D to quit) "))
@@ -167,10 +178,17 @@ if __name__ == "__main__":
     #check when theres no input in the stdin
     #check if the user input any other value rather than y or n in the quit or continue logic
 
+    #email validation
+    #name validation
+    #password validation
+
 #############IMPROVEMENT#############
     # implement user login
     # implement a file to store the details of the user
     # implement forgetten password
+
+
+
 
 
 #activities to carry 2day 
