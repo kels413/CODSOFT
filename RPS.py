@@ -21,75 +21,81 @@ def welcomeMessage():
 
 os.system('clear')
   
-def signUp(): 
-    count = 0
-    firstName = input("firstName: ").title()
-    lastName = input("lasttName: ").title()
-    email = input("email: ")
-
-
-
-
-    while not is_valid_email(email):
-        print(f"{email} is not a valid email address.")
+def signUp():
+    try:
+        count = 0
+        firstName = input("firstName: ").title()
+        lastName = input("lasttName: ").title()
         email = input("email: ")
-        count += 1
-        if count > 1:
-            print("Try Again!")
+
+        while not is_valid_email(email):
+            print(f"{email} is not a valid email address.")
+            email = input("email: ")
+            count += 1
+            if count > 1:
+                print("Try Again!")
+                exit(0)
+
+        gender = input("gender:  (m/f) ")
+
+        if gender not in ["m", "f"]:
+            print("sorry not a valid gender 😩")
             exit(0)
 
-    gender = input("gender:  (m/f) ")
+        phoneNumber = input("phoneNumber: ")
+        password = input("password: ")
+        confirmPassword  = input("confirm password: ")
+        #password validation.
 
-    if gender not in ["m", "f"]:
-        print("sorry not a valid gender 😩")
+        while not confirmPassword == password:
+          print("Sorry, passwords don't match. Please try again.")
+          confirmPassword  = input("confirm password: ")
+          count += 1
+          if count > 2:
+              print("sorry you have to try later 🤧")
+              exit(0)
+
+        os.system('clear')
+        print(f"You have Successfully registered for the RPS Game")
+
+        #Writting and saving the users crendentials in a file.
+        userData = f"{firstName}\n{lastName}\n{email}\n{gender}\n{phoneNumber}\n{password}\n"
+        filePath = open(".RPS", "a")
+        filePath.write(userData)
+        filePath.close()
+
+        # generating username. (using slicing)
+        usrFn = firstName[:3]
+        usrLn = lastName[:3]
+        usrPhoneNo = phoneNumber[-2:]
+
+        userNameList= [usrFn, usrLn, usrPhoneNo]
+        userName = "".join(userNameList)
+        print(f"your username is:{userName}\n")
+
+    except (KeyboardInterrupt, EOFError):
+        print("\nGOOD BYE!")
         exit(0)
-
-    phoneNumber = input("phoneNumber: ")
-    password = input("password: ")
-    confirmPassword  = input("confirm password: ")
-
-
-    #password validation.
-
-    while not confirmPassword == password:
-      print("Sorry, passwords don't match. Please try again.")
-      confirmPassword  = input("confirm password: ")
-      count += 1
-      if count > 2:
-          print("sorry you have to try later 🤧")
-          exit(0)
-
-    os.system('clear')
-    print(f"You have Successfully registered for the RPS Game")
-        
-    #Writting and saving the users crendentials in a file.
-    userData = f"{firstName}\n{lastName}\n{email}\n{gender}\n{phoneNumber}\n{password}\n"
-
-    fileName = ".RPS"
-
-    filePath = open(fileName, "a")
-
-    filePath.write(userData)
-
-    filePath.close()
-
-    # generating username. (using slicing)
-    usrFn = firstName[:3]
-    usrLn = lastName[:3]
-    usrPhoneNo = phoneNumber[-2:]
-
-    userNameList= [usrFn, usrLn, usrPhoneNo]
-
-    userName = "".join(userNameList)
-
-    print(f"your username is:{userName}\n")
 
 #Login Message
 
 
 def userLogin():
-    pass
+    userName =  input("Enter Username: ")
+    password = input("Enter Password: ")
 
+
+
+    with open(".RPS", "r") as file:
+        fileContent = file.read()
+
+        if userName in fileContent or password in fileContent:
+            print("Login successFul")
+        else:
+            print("Invalid UserName or Password")
+            exit(0)
+
+    
 
 def validateUserLogin():
     pass
@@ -186,10 +192,6 @@ if __name__ == "__main__":
     # implement user login
     # implement a file to store the details of the user
     # implement forgetten password
-
-
-
-
 
 #activities to carry 2day 
     # finish my email stuff
