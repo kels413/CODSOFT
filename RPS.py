@@ -14,10 +14,21 @@ def is_valid_email(email):
     return match is not None
 
 def welcomeMessage():
-    print("Welcome to Rock, Paper, Scissors")
-    print("press (ctrl d or ctrl c)  to quit the game")
-    print("0.Signup")
-    print("1.LogIn")
+    try:
+        print("Welcome to Rock, Paper, Scissors")
+        print("press (ctrl d or ctrl c)  to quit the game")
+        choice = int(input("(0.Signup), (1, Login): "))
+
+        if choice == 0:
+            signUp()
+        elif choice == 1:
+            userLogin()
+        else:
+            print("Invalid Input!")
+        exit(0)
+    except (KeyboardInterrupt, EOFError):
+        print("\nGoodbye!")
+        exit(0)
 
 os.system('clear')
   
@@ -79,27 +90,21 @@ def signUp():
 
 #Login Message
 
-
 def userLogin():
     userName =  input("Enter Username: ")
     password = input("Enter Password: ")
-
-
-
-    with open(".RPS", "r") as file:
-        fileContent = file.read()
-
-        if userName in fileContent or password in fileContent:
-            print("Login successFul")
-        else:
-            print("Invalid UserName or Password")
-            exit(0)
-
+    try:
+        with open(".RPS", "r") as file:
+            fileContent = file.read()
+            if userName in fileContent or password in fileContent:
+                print("Login successFul")
+                RPS()
+            else:
+                print("Invalid UserName or Password")
+                exit(0)
+    except (FileNotFoundError):
+         print("an error occured")
     
-
-def validateUserLogin():
-    pass
-
 
 def RPS():
     count = 0
@@ -174,10 +179,7 @@ if __name__ == "__main__":
     except (KeyboardInterrupt, EOFError):
         print("\nGoodbye!")
         exit(0)
-    RPS()
-
- 
-
+   
 
 ###########ERROR HANDLING (edge cases)#########
     #check if the user input is greater than 2.
