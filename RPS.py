@@ -1,5 +1,17 @@
 import random
 import os
+import re
+
+
+def is_valid_email(email):
+    # Define the regular expression pattern for a basic email validation
+    pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+
+    # Use the re.match() function to check if the entire string matches the pattern
+    match = re.match(pattern, email)
+
+    # If match is not None, the email is valid; otherwise, it's invalid
+    return match is not None
 
 
 def welcomeMessage():
@@ -11,13 +23,25 @@ def welcomeMessage():
 os.system('clear')
   
 def signUp():
+
+
     count = 0
     firstName = input("firstName: ").title()
     lastName = input("lasttName: ").title()
     email = input("email: ")
+
+
+    while not is_valid_email(email):
+        print(f"{email} is not a valid email address.")
+        email = input("email: ")
+        count += 1
+        if count > 1:
+            print("Try Again!")
+            exit(0)
+
     gender = input("gender:  (m/f) ")
 
-    if not gender == "m" or gender == "f":
+    if gender not in ["m", "f"]:
         print("sorry not a valid gender 😩")
         exit(0)
 
@@ -25,28 +49,20 @@ def signUp():
     password = input("password: ")
     confirmPassword  = input("confirm password: ")
 
-    
-
-
-    #user input validations
-
-
-
 
     #password validation.
-    while  True:
-        if not confirmPassword == password:
-          print("sorry password's don't match")
-          confirmPassword  = input("confirm password: ")
-          count += 1
-          if count > 2:
-              print("sorry you have to try later 🤧")
-              exit(0)
-        else:
-            os.system('clear')
-            print(f"You have Successfully registered for the RPS Game")
-            break
 
+    while not confirmPassword == password:
+      print("Sorry, passwords don't match. Please try again.")
+      confirmPassword  = input("confirm password: ")
+      count += 1
+      if count > 2:
+          print("sorry you have to try later 🤧")
+          exit(0)
+
+    os.system('clear')
+    print(f"You have Successfully registered for the RPS Game")
+        
     #Writting and saving the users crendentials in a file.
     userData = f"{firstName}\n{lastName}\n{email}\n{gender}\n{phoneNumber}\n{password}\n"
 
