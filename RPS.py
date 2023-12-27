@@ -168,17 +168,6 @@ def RPS():
 if __name__ == "__main__":
     welcomeMessage()
     signUp()
-    try:
-        print("want to login to your Account? ")
-        loginInput = int(input("(1.Login), (ctrl + D to quit) "))
-        if loginInput == 1:
-            userLogin()
-        else:
-            print("Invalid key!")
-            exit(0)
-    except (KeyboardInterrupt, EOFError):
-        print("\nGoodbye!")
-        exit(0)
    
 
 ###########ERROR HANDLING (edge cases)#########
