@@ -20,22 +20,31 @@ def signUp():
     password = input("password: ")
     confirmPassword  = input("confirm password: ")
 
+    
+
+
+    #user input validations
+
+    firstName = firstName.title()
+    lastName  = lastName.title()
+
 
     #password validation.
     while  True:
         if not confirmPassword == password:
-          print("sorry password don't match")
+          print("sorry password's don't match")
           confirmPassword  = input("confirm password: ")
           count += 1
-          if count == 3:
+          if count > 2:
               print("sorry you have to try later 🤧")
               exit(0)
         else:
-            print(f"You have Successfully registeres for the RPS Game")
+            os.system('clear')
+            print(f"You have Successfully registered for the RPS Game")
             break
 
     #Writting and saving the users crendentials in a file.
-    userData = f"{firstName}, {lastName}, {email}, {gender}, {phoneNumber}, {password}\n"
+    userData = f"{firstName}\n{lastName}\n{email}\n{gender}\n{phoneNumber}\n{password}\n"
 
     fileName = ".RPS"
 
@@ -45,6 +54,13 @@ def signUp():
 
     filePath.close()
 
+
+
+#Login Message
+
+
+def userLogin():
+    print("GOD IS THE GREATEST")
 
 
 def RPS():
@@ -109,7 +125,22 @@ def RPS():
 if __name__ == "__main__":
     welcomeMessage()
     signUp()
+    print(id(signUp))
+    try:
+        print("want to login to your Account? ")
+        loginInput = int(input("(1.Login), (ctrl + D to quit) "))
+        if loginInput == 1:
+            userLogin()
+        else:
+            print("Invalid key!")
+            exit(0)
+    except (KeyboardInterrupt, EOFError):
+        print("\nGoodbye!")
+        exit(0)
     RPS()
+
+ 
+
 
 ###########ERROR HANDLING (edge cases)#########
     #check if the user input is greater than 2.
