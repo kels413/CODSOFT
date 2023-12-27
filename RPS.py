@@ -2,7 +2,7 @@ import random
 import os
 import re
 
-
+#email reg validator
 def is_valid_email(email):
     # Define the regular expression pattern for a basic email validation
     pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
@@ -12,7 +12,6 @@ def is_valid_email(email):
 
     # If match is not None, the email is valid; otherwise, it's invalid
     return match is not None
-
 
 def welcomeMessage():
     print("Welcome to Rock, Paper, Scissors")
@@ -72,17 +71,16 @@ def signUp():
 
     filePath.close()
 
-    # generating username.
+    # generating username. (using slicing)
+    usrFn = firstName[:3]
+    usrLn = lastName[:3]
+    usrPhoneNo = phoneNumber[-2:]
 
-    # dividedPhoneNumber = phoneNumber / 3
-
-    userNameList= [firstName, lastName, phoneNumber]
+    userNameList= [usrFn, usrLn, usrPhoneNo]
 
     userName = "".join(userNameList)
 
-    print("your username is: ", userName)
-
-
+    print(f"your username is:{userName}\n")
 
 #Login Message
 
