@@ -12,10 +12,15 @@ os.system('clear')
   
 def signUp():
     count = 0
-    firstName = input("firstName: ")
-    lastName = input("lasttName: ")
+    firstName = input("firstName: ").title()
+    lastName = input("lasttName: ").title()
     email = input("email: ")
-    gender = input("gender: ")
+    gender = input("gender:  (m/f) ")
+
+    if not gender == "m" or gender == "f":
+        print("sorry not a valid gender 😩")
+        exit(0)
+
     phoneNumber = input("phoneNumber: ")
     password = input("password: ")
     confirmPassword  = input("confirm password: ")
@@ -25,8 +30,7 @@ def signUp():
 
     #user input validations
 
-    firstName = firstName.title()
-    lastName  = lastName.title()
+
 
 
     #password validation.
