@@ -28,6 +28,8 @@ def signUp():
     email = input("email: ")
 
 
+
+
     while not is_valid_email(email):
         print(f"{email} is not a valid email address.")
         email = input("email: ")
