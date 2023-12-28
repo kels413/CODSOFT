@@ -177,6 +177,7 @@ def RPS():
                     print("draw 🤝")
                     print(f"bot chose {botChoice}")
                     print(f"player chose {usersChoice}")
+                    
                      
             count += 1
             if count == 5:
