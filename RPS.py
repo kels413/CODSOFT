@@ -17,15 +17,20 @@ def welcomeMessage():
     try:
         print("Welcome to Rock, Paper, Scissors")
         print("press (ctrl d or ctrl c)  to quit the game")
-        choice = int(input("(0.Signup), (1, Login): "))
-
-        if choice == 0:
-            signUp()
-        elif choice == 1:
-            userLogin()
-        else:
-            print("Invalid Input!")
-        exit(0)
+        choice = input("(0.Signup), (1, Login): ")
+        if not isinstance(choice, int):
+            try:
+                choice = int(choice)
+                if choice == 0:
+                   signUp()
+                elif choice == 1:
+                    userLogin()
+                else:
+                    print("Invalid Input!")
+                    exit(0)
+            except ValueError:
+                print("Invalid input, Try Again !")
+                exit(0)
     except (KeyboardInterrupt, EOFError):
         print("\nGoodbye!")
         exit(0)
@@ -47,13 +52,14 @@ def signUp():
                 print("Try Again!")
                 exit(0)
 
-        gender = input("gender:  (m/f) ")
-
-        if gender not in ["m", "f"]:
-            print("sorry not a valid gender 😩")
-            exit(0)
+        if os.path.isfile(".RPS"):
+                validateEmail(email)
 
         phoneNumber = input("phoneNumber: ")
+
+        if os.path.isfile(".RPS"):
+            validatePhone(phoneNumber)
+
         password = input("password: ")
         confirmPassword  = input("confirm password: ")
         #password validation.
@@ -65,53 +71,81 @@ def signUp():
           if count > 2:
               print("sorry you have to try later 🤧")
               exit(0)
-
+            
+        if os.path.isfile(".RPS"):
+            validatePassword(password)
+       
         os.system('clear')
-        print(f"You have Successfully registered for the RPS Game")
-
-        #Writting and saving the users crendentials in a file.
-        userData = f"{firstName}\n{lastName}\n{email}\n{gender}\n{phoneNumber}\n{password}\n"
-        filePath = open(".RPS", "a")
-        filePath.write(userData)
-        filePath.close()
-
-        # generating username. (using slicing)
         usrFn = firstName[:3]
         usrLn = lastName[:3]
         usrPhoneNo = phoneNumber[-2:]
-
         userNameList= [usrFn, usrLn, usrPhoneNo]
         userName = "".join(userNameList)
+        #Writting and saving the users crendentials in a file.
+        userData = f"{firstName}\n{lastName}\n{email}\n{phoneNumber}\n{password}\n{userName}\n"
+        filePath = open(".RPS", "a")
+        
+        filePath.write(userData)
+        filePath.close()
+        print(f"You have Successfully registered for the RPS Game")
         print(f"your username is:{userName}\n")
-
+        # generating username. (using slicing)
+       
     except (KeyboardInterrupt, EOFError):
         print("\nGOOD BYE!")
         exit(0)
 
-#Login Message
 
+#validate email
+def validateEmail(email):
+    with open(".RPS", "r") as file:
+        fileContent = file.read()
+        if email in fileContent:
+            print("email already registered")
+            exit(0)
+
+#validate phoneNumber
+def validatePhone(phoneNumber):
+    with open(".RPS", "r") as file:
+        fileContent = file.read()
+        if phoneNumber in fileContent:
+            print("phoneNumber already registered")
+            exit(0)
+
+#validate password
+def validatePassword(password):
+    with open(".RPS", "r") as file:
+        fileContent = file.read()
+    if password in fileContent:
+        print("Password already taken")
+        exit(0)
+    
+#Login Message
 def userLogin():
     userName =  input("Enter Username: ")
+    while not userName:
+        print("sorry input cannot be Empty: ")
+        userName =  input("Enter Username: ")
     password = input("Enter Password: ")
-    try:
-        with open(".RPS", "r") as file:
-            fileContent = file.read()
-            if userName in fileContent or password in fileContent:
-                print("Login successFul")
-                RPS()
-            else:
-                print("Invalid UserName or Password")
-                exit(0)
-    except (FileNotFoundError):
-         print("an error occured")
+    while not password:
+        print("sorry input cannot be Empty: ")
+        password = input("Enter Password: ")
+    with open(".RPS", "r") as file:
+        fileContent = file.read()
+        print(fileContent)
+        if userName in fileContent or password  in fileContent:
+            print("Login successFul")
+            RPS()
+        else:
+            print("Invalid UserName or Password")
+            exit(0)
     
-
 def RPS():
     count = 0
     try:        
         while True:
         
-            userInput = input("Select choice (0, Rock), (1, Scissors), (2, paper) ")
+            userInput = input("Select choice (0, Rock), (1, paper), (2, scissors) ")
         
             if not userInput:
                 continue
@@ -123,28 +157,29 @@ def RPS():
                         print(f"Error: user input {userInput} is not a valid integer")
                         break
             randomNumber = random.randint(0,2) #Generate a random number
-            choice = ["Rock", "Paper", "Scissors"]
+            choice = ["Rock 🧨", "Paper 📕", "Scissors ✂️"]
             botChoice = choice[randomNumber] #Match botchoice with the random integers generated
         
             if  userInput > 2:
                 userInput = input("Select choice (0, Rock), (1, Scissors), (2, paper) ")
 
             else:
-                usersChoice = choice[userInput] #Match userInput with the choice
-                if (userInput == 0 and randomNumber == 1 or userInput == 2 and randomNumber == 1
-                or userInput == 1 and randomNumber == 0):
-                    print("player won")
+                usersChoice = choice[userInput] #Match userInput with the choice                
+                if usersChoice == 0 and botChoice == 2 or usersChoice == 1 and botChoice ==  0 or usersChoice == 2 and botChoice == 1:
+                    print("player won 💃🏽")
                     print(f"player chose {usersChoice}")
                     print(f"bot chose {botChoice}")
-                    
-                elif userInput == randomNumber:
-                    print("draw")
+                elif botChoice == usersChoice:
+                    print("draw 🤝")
                     print(f"bot chose {botChoice}")
                     print(f"player chose {usersChoice}")
                 else:
-                    print("bot won")
+                    print("bot won 💃🏽")
                     print(f"bot chose {botChoice}")
                     print(f"player chose {usersChoice}")
+                    
+                    
+
 
                 #logic to quit or continue game
             count += 1
@@ -167,9 +202,6 @@ def RPS():
 
 if __name__ == "__main__":
     welcomeMessage()
-    signUp()
-   
-
 ###########ERROR HANDLING (edge cases)#########
     #check if the user input is greater than 2.
     #check when theres no input in the stdin
