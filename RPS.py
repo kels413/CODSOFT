@@ -144,7 +144,6 @@ def RPS():
     count = 0
     try:        
         while True:
-        
             userInput = input("Select choice (0, Rock), (1, paper), (2, scissors) ")
         
             if not userInput:
@@ -164,24 +163,21 @@ def RPS():
                 userInput = input("Select choice (0, Rock), (1, Scissors), (2, paper) ")
 
             else:
-                usersChoice = choice[userInput] #Match userInput with the choice                
-                if usersChoice == 0 and botChoice == 2 or usersChoice == 1 and botChoice ==  0 or usersChoice == 2 and botChoice == 1:
+                usersChoice = choice[userInput] #Match userInput with the choice  
+                result = (userInput - randomNumber) % 3
+                if result == 1:
                     print("player won 💃🏽")
                     print(f"player chose {usersChoice}")
                     print(f"bot chose {botChoice}")
-                elif botChoice == usersChoice:
-                    print("draw 🤝")
-                    print(f"bot chose {botChoice}")
-                    print(f"player chose {usersChoice}")
-                else:
+                elif result == 2:
                     print("bot won 💃🏽")
                     print(f"bot chose {botChoice}")
                     print(f"player chose {usersChoice}")
-                    
-                    
-
-
-                #logic to quit or continue game
+                else:
+                    print("draw 🤝")
+                    print(f"bot chose {botChoice}")
+                    print(f"player chose {usersChoice}")
+                     
             count += 1
             if count == 5:
                 userInput = input("wish to continue ? (y, continue) or  (or ctrl d or ctrl c to quit) ")
