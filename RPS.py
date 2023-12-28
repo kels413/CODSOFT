@@ -179,7 +179,7 @@ def RPS():
                     print(f"player chose {usersChoice}")
             
 
-            g
+            
             count += 1
             if count == 5:
                 userInput = input("wish to continue ? (y, continue) or  (or ctrl d or ctrl c to quit) ")
