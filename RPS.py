@@ -75,7 +75,7 @@ def signUp():
         if os.path.isfile(".RPS"):
             validatePassword(password)
        
-        os.system('clear')
+        os.system('clear') # clear the console
 
         #creating username c
         userName = creatUserName(firstName, lastName, phoneNumber)
