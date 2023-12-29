@@ -169,8 +169,8 @@ def RPS():
                     print("player won 💃🏽")
                     print(f"player chose {usersChoice}")
                     print(f"bot chose {botChoice}")
-                    print("player {highscore}")
                     highScore += 1
+                    print(f"player: {highScore}")
                 elif botChoice == usersChoice:
                     print("draw 🤝")
                     print(f"bot chose {botChoice}")
@@ -179,8 +179,8 @@ def RPS():
                     print("bot won 💃🏽")
                     print(f"bot chose {botChoice}")
                     print(f"player chose {usersChoice}")
-                    print(f"Bot highScore {highScore}")
                     highScore += 1
+                    print(f"Bot highScore: {highScore}")
                 #logic to quit or continue game
             count += 1
             if count == 5:
