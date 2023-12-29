@@ -12,7 +12,7 @@ def is_valid_email(email):
 
     # If match is not None, the email is valid; otherwise, it's invalid
     return match is not None
-
+#welcome 
 def welcomeMessage():
     try:
         print("Welcome to Rock, Paper, Scissors")
@@ -32,7 +32,7 @@ def welcomeMessage():
                 print("Invalid input, Try Again !")
                 exit(0)
     except (KeyboardInterrupt, EOFError):
-        print("\nGoodbye!")
+        print("\nExit from Rock🧨 paper📕 scissors Game✂️ ")
         exit(0)
 
 os.system('clear')
@@ -40,9 +40,9 @@ os.system('clear')
 def signUp():
     try:
         count = 0
-        firstName = input("firstName: ").title()
-        lastName = input("lasttName: ").title()
-        email = input("email: ")
+        firstName = input("Enter firstName: ").title()
+        lastName = input("Enter lastName: ").title()
+        email = input("Enter email: ")
 
         while not is_valid_email(email):
             print(f"{email} is not a valid email address.")
@@ -55,15 +55,15 @@ def signUp():
         if os.path.isfile(".RPS"):
                 validateEmail(email)
 
-        phoneNumber = input("phoneNumber: ")
+        phoneNumber = input("Enter phoneNumber: ")
 
         if os.path.isfile(".RPS"):
             validatePhone(phoneNumber)
 
-        password = input("password: ")
+        password = input("Enter password: ")
         confirmPassword  = input("confirm password: ")
-        #password validation.
 
+        #password validation.
         while not confirmPassword == password:
           print("Sorry, passwords don't match. Please try again.")
           confirmPassword  = input("confirm password: ")
@@ -76,11 +76,9 @@ def signUp():
             validatePassword(password)
        
         os.system('clear')
-        usrFn = firstName[:3]
-        usrLn = lastName[:3]
-        usrPhoneNo = phoneNumber[-2:]
-        userNameList= [usrFn, usrLn, usrPhoneNo]
-        userName = "".join(userNameList)
+
+        #creating username c
+        userName = creatUserName(firstName, lastName, phoneNumber)
         #Writting and saving the users crendentials in a file.
         userData = f"{firstName}\n{lastName}\n{email}\n{phoneNumber}\n{password}\n{userName}\n"
         filePath = open(".RPS", "a")
@@ -95,6 +93,15 @@ def signUp():
         print("\nGOOD BYE!")
         exit(0)
 
+#creat username
+def creatUserName(firstName, lastName, phoneNumber):
+        usrFn = firstName[:3]
+        usrLn = lastName[:3]
+        usrPhoneNo = phoneNumber[-2:]
+        userNameList= [usrFn, usrLn, usrPhoneNo]
+        userName = "".join(userNameList)
+
+        return userName
 
 #validate email
 def validateEmail(email):
@@ -121,28 +128,35 @@ def validatePassword(password):
         exit(0)
     
 #Login Message
+        
 def userLogin():
-    userName =  input("Enter Username: ")
-    while not userName:
+    usersName =  input("Enter Username: ")
+    while not usersName:
         print("sorry input cannot be Empty: ")
-        userName =  input("Enter Username: ")
+        usersName =  input("Enter Username: ")
     password = input("Enter Password: ")
     while not password:
         print("sorry input cannot be Empty: ")
         password = input("Enter Password: ")
     with open(".RPS", "r") as file:
         fileContent = file.read()
-        print(fileContent)
-        if userName in fileContent or password  in fileContent:
+        if usersName in fileContent and password  in fileContent:
             print("Login successFul")
-            RPS()
+            RPS(usersName)
         else:
             print("Invalid UserName or Password")
             exit(0)
     
-def RPS():
+def printUserHighscore(userName, playerHighScore):
+     print(f"{userName} highScore: {playerHighScore}")
+    
+
+#Game logic
+def RPS(userName):
     count = 0
-    highScore = 0
+    playerHighScore = 0
+    botHighScore = 0
+    print(f"Welcome in {userName}") #Welcome message
     try:        
         while True:
             userInput = input("Select choice (0, Rock), (1, paper), (2, scissors) ")
@@ -160,17 +174,15 @@ def RPS():
             choice = ["Rock 🧨", "Paper 📕", "Scissors ✂️"]
             botChoice = choice[randomNumber] #Match botchoice with the random integers generated
         
-            if  userInput > 2:
-                userInput = input("Select choice (0, Rock), (1, Scissors), (2, paper) ")
-
-            else:
+            if  userInput in [0, 1, 2]:
                 usersChoice = choice[userInput] #Match userInput with the choice                
                 if (userInput == 0 and randomNumber == 2) or (userInput == 1 and randomNumber ==  0) or (userInput == 2 and randomNumber == 1):
                     print("player won 💃🏽")
                     print(f"player chose {usersChoice}")
                     print(f"bot chose {botChoice}")
-                    highScore += 1
-                    print(f"player: {highScore}")
+                    
+                    playerHighScore += 1
+                    print(f"player: {playerHighScore}")
                 elif botChoice == usersChoice:
                     print("draw 🤝")
                     print(f"bot chose {botChoice}")
@@ -179,29 +191,45 @@ def RPS():
                     print("bot won 💃🏽")
                     print(f"bot chose {botChoice}")
                     print(f"player chose {usersChoice}")
-                    highScore += 1
-                    print(f"Bot highScore: {highScore}")
+                    botHighScore += 1
+                    print(f"Bot highScore: {botHighScore}")
+            else:
+                userInput = input("Select choice (0, Rock), (1, Scissors), (2, paper) ")
+                continue
                 #logic to quit or continue game
             count += 1
             if count == 5:
-                userInput = input("wish to continue ? (y, continue) or  (or ctrl d or ctrl c to quit) ")
+                userInput = input("wish to continue ? (y, continue) or  (any key to quit) ")
                 if userInput.lower() == "y":
                     count = 0
                     continue
-                elif userInput.lower() == "n":
-                    count = 0
-                    print("Thank you for playing Rock paper scissors Game")
-                    break
                 else:
-                    print("Not a valid syntax")
-                    exit(1)
+                    if playerHighScore > botHighScore:
+                        print(f"Player Won the GAME 🚀")
+                        printUserHighscore(userName,  playerHighScore)
+                    elif botHighScore > playerHighScore:
+                        print(f"Bot won the Game🚀")
+                        return botHighScore
+                    else:
+                        print("it was a draw Game 🤝")
+                    print(f"Bot highScore: {botHighScore}")
+                    printUserHighscore(userName,  playerHighScore)
+                    print("Thank you for playing Rock paper scissors Game")
+                    exit(0)
     except (EOFError,KeyboardInterrupt):
-        print("\nGoodbye!")
-        exit(0)
-
-
+        if playerHighScore > botHighScore:
+            print(f"Player Won the GAME 🚀")
+        elif botHighScore > playerHighScore:
+            print(f"Bot won the Game🚀")
+        else:
+            print("\nit was a draw Game 🤝")
+        print(f"Bot highScore: {botHighScore}")
+        printUserHighscore(userName,  playerHighScore)
+    print("Thank you for playing Rock🧨 paper📕 scissors Game✂️ ")
+    exit(0)
 if __name__ == "__main__":
     welcomeMessage()
+
 ###########ERROR HANDLING (edge cases)#########
     #check if the user input is greater than 2.
     #check when theres no input in the stdin
@@ -215,8 +243,7 @@ if __name__ == "__main__":
     # implement user login
     # implement a file to store the details of the user
     # implement forgetten password
-
-#activities to carry 2day 
-    # finish my email stuff
-    # read about alias and evnironment variable 
-    # make my git to periodcally update and push
+    # find a way to know the user that logged in using their username
+    # implement real time email messaging after user registered with their email
+    # implement real time greating
+    # save the highscore of each user
