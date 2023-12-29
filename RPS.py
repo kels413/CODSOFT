@@ -142,6 +142,7 @@ def userLogin():
     
 def RPS():
     count = 0
+    highScore = 0
     try:        
         while True:
             userInput = input("Select choice (0, Rock), (1, paper), (2, scissors) ")
@@ -163,39 +164,24 @@ def RPS():
                 userInput = input("Select choice (0, Rock), (1, Scissors), (2, paper) ")
 
             else:
-                usersChoice = choice[userInput] #Match userInput with the choice  
-                result = (userInput - randomNumber) % 3
-                if result == 1:
+                usersChoice = choice[userInput] #Match userInput with the choice                
+                if (userInput == 0 and randomNumber == 2) or (userInput == 1 and randomNumber ==  0) or (userInput == 2 and randomNumber == 1):
                     print("player won 💃🏽")
                     print(f"player chose {usersChoice}")
                     print(f"bot chose {botChoice}")
-                elif result == 2:
-                    print("bot won 💃🏽")
-                    print(f"bot chose {botChoice}")
-                    print(f"player chose {usersChoice}")
-                else:
+                    print("player {highscore}")
+                    highScore += 1
+                elif botChoice == usersChoice:
                     print("draw 🤝")
                     print(f"bot chose {botChoice}")
                     print(f"player chose {usersChoice}")
-            
-
-            
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                else:
+                    print("bot won 💃🏽")
+                    print(f"bot chose {botChoice}")
+                    print(f"player chose {usersChoice}")
+                    print(f"Bot highScore {highScore}")
+                    highScore += 1
+                #logic to quit or continue game
             count += 1
             if count == 5:
                 userInput = input("wish to continue ? (y, continue) or  (or ctrl d or ctrl c to quit) ")
