@@ -18,19 +18,16 @@ def welcomeMessage():
         print("Welcome to Rock, Paper, Scissors")
         print("press (ctrl d or ctrl c)  to quit the game")
         choice = input("(0.Signup), (1, Login): ")
-        if not isinstance(choice, int):
+        while not isinstance(choice, int):
             try:
                 choice = int(choice)
                 if choice == 0:
                    signUp()
                 elif choice == 1:
                     userLogin()
-                else:
-                    print("Invalid Input!")
-                    exit(0)
             except ValueError:
-                print("Invalid input, Try Again !")
-                exit(0)
+                print("Invalid Input: Try Again!")
+                choice = input("(0.Signup), (1, Login): ")
     except (KeyboardInterrupt, EOFError):
         print("\nExit from Rock🧨 paper📕 scissors Game✂️ ")
         exit(0)
@@ -76,7 +73,6 @@ def signUp():
             validatePassword(password)
 
 
-       
         os.system('clear') # clear the console
 
         #creating username c
@@ -102,7 +98,6 @@ def creatUserName(firstName, lastName, phoneNumber):
         usrPhoneNo = phoneNumber[-2:]
         userNameList= [usrFn, usrLn, usrPhoneNo]
         userName = "".join(userNameList)
-
         return userName
 
 #validate email
@@ -130,21 +125,21 @@ def validatePassword(password):
         exit(0)
     
 #Login Message
-        
 def userLogin():
-    usersName =  input("Enter Username: ")
-    while not usersName:
+    userName =  input("Enter Username: ")
+    while not userName:
         print("sorry input cannot be Empty: ")
-        usersName =  input("Enter Username: ")
+        userName =  input("Enter Username: ")
     password = input("Enter Password: ")
     while not password:
         print("sorry input cannot be Empty: ")
         password = input("Enter Password: ")
     with open(".RPS", "r") as file:
         fileContent = file.read()
-        if usersName in fileContent and password  in fileContent:
+        if userName in fileContent and password  in fileContent:
             print("Login successFul")
-            RPS(usersName)
+            print(f"Welcome in {userName}") #Welcome message
+            RPS(userName)
         else:
             print("Invalid UserName or Password")
             exit(0)
@@ -155,22 +150,19 @@ def printUserHighscore(userName, playerHighScore):
 
 #Game logic
 def RPS(userName):
-    count = 0
+    quitCount = 0
     playerHighScore = 0
     botHighScore = 0
-    print(f"Welcome in {userName}") #Welcome message
     try:        
         while True:
-            print("before the control")
+            # print("before the control")
             userInput = input("Select choice (0, Rock), (1, paper), (2, scissors) ")
-        
-           
             if not isinstance(userInput, int):
                 try:
                     userInput = int(userInput) 
                 except ValueError:
                     userInput = input("Select choice (0, Rock), (1, paper), (2, scissors) ")
-                    print("after the control")
+                    # print("after the control")
                     # print(f"Error: user input {userInput} is not a valid integer")
                     # break
             randomNumber = random.randint(0,2) #Generate a random number
@@ -200,36 +192,34 @@ def RPS(userName):
                 userInput = input("Select choice (0, Rock), (1, Scissors), (2, paper) ")
                 continue
                 #logic to quit or continue game
-            count += 1
-            if count == 5:
-                userInput = input("wish to continue ? (y, continue) or  (any key to quit) ")
-                if userInput.lower() == "y":
-                    count = 0
-                    continue
-                else:
-                    if playerHighScore > botHighScore:
-                        print(f"Player Won the GAME 🚀")
-                        printUserHighscore(userName,  playerHighScore)
-                    elif botHighScore > playerHighScore:
-                        print(f"Bot won the Game🚀")
-                        return botHighScore
-                    else:
-                        print("it was a draw Game 🤝")
-                    print(f"Bot highScore: {botHighScore}")
-                    printUserHighscore(userName,  playerHighScore)
-                    print("Thank you for playing Rock paper scissors Game")
-                    exit(0)
+            quitCount += 1
+            if quitCount == 5:
+                quitGame(botHighScore, playerHighScore, userName)
+                
     except (EOFError,KeyboardInterrupt):
-        if playerHighScore > botHighScore:
-            print(f"Player Won the GAME 🚀")
-        elif botHighScore > playerHighScore:
-            print(f"Bot won the Game🚀")
-        else:
-            print("\nit was a draw Game 🤝")
-        print(f"Bot highScore: {botHighScore}")
+        determineWinner(botHighScore, playerHighScore, userName)
+#Function to determine the winner of the game.
+def determineWinner(botHighScore, playerHighScore, userName):
+    if playerHighScore > botHighScore:
+        print(f"Player Won the GAME 🚀")
         printUserHighscore(userName,  playerHighScore)
-    print("Thank you for playing Rock🧨 paper📕 scissors Game✂️ ")
+    elif botHighScore > playerHighScore:
+        print(f"Bot won the Game🚀")
+        return botHighScore
+    else:
+        print("it was a draw Game 🤝")
+    print(f"Bot highScore: {botHighScore}")
+    printUserHighscore(userName,  playerHighScore)
+    print("Thank you for playing Rock paper scissors Game")
     exit(0)
+
+def quitGame(botHighScore, playerHighScore, userName):
+    userInput = input("wish to continue ? (y, continue) or  (any key to quit) ")
+    if userInput.lower() == "y":
+        RPS(userName)
+    else:
+        determineWinner(botHighScore, playerHighScore, userName)
+
 if __name__ == "__main__":
     welcomeMessage()
 
