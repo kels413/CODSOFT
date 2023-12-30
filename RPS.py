@@ -216,7 +216,6 @@ def determineWinner(botHighScore, playerHighScore, userName):
     exit(0)
 
 
-
 #function to quit the game
 def quitGame(botHighScore, playerHighScore, userName):
     userInput = input("wish to continue ? (y, continue) or  (any key to quit) ")
