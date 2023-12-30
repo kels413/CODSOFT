@@ -1,6 +1,7 @@
 import random
 import os
 import re
+import hashlib
 
 #email reg validator
 def is_valid_email(email):
@@ -198,6 +199,8 @@ def RPS(userName):
                 
     except (EOFError,KeyboardInterrupt):
         determineWinner(botHighScore, playerHighScore, userName)
+
+
 #Function to determine the winner of the game.
 def determineWinner(botHighScore, playerHighScore, userName):
     if playerHighScore > botHighScore:
@@ -205,7 +208,6 @@ def determineWinner(botHighScore, playerHighScore, userName):
         printUserHighscore(userName,  playerHighScore)
     elif botHighScore > playerHighScore:
         print(f"Bot won the Game🚀")
-        return botHighScore
     else:
         print("it was a draw Game 🤝")
     print(f"Bot highScore: {botHighScore}")
@@ -213,12 +215,16 @@ def determineWinner(botHighScore, playerHighScore, userName):
     print("Thank you for playing Rock paper scissors Game")
     exit(0)
 
+
+
+#function to quit the game
 def quitGame(botHighScore, playerHighScore, userName):
     userInput = input("wish to continue ? (y, continue) or  (any key to quit) ")
     if userInput.lower() == "y":
         RPS(userName)
     else:
         determineWinner(botHighScore, playerHighScore, userName)
+
 
 if __name__ == "__main__":
     welcomeMessage()
