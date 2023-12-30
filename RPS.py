@@ -74,6 +74,8 @@ def signUp():
             
         if os.path.isfile(".RPS"):
             validatePassword(password)
+
+
        
         os.system('clear') # clear the console
 
@@ -159,17 +161,18 @@ def RPS(userName):
     print(f"Welcome in {userName}") #Welcome message
     try:        
         while True:
+            print("before the control")
             userInput = input("Select choice (0, Rock), (1, paper), (2, scissors) ")
         
-            if not userInput:
-                continue
-            else:
-                if not isinstance(userInput, int):
-                    try:
-                        userInput = int(userInput) 
-                    except ValueError:
-                        print(f"Error: user input {userInput} is not a valid integer")
-                        break
+           
+            if not isinstance(userInput, int):
+                try:
+                    userInput = int(userInput) 
+                except ValueError:
+                    userInput = input("Select choice (0, Rock), (1, paper), (2, scissors) ")
+                    print("after the control")
+                    # print(f"Error: user input {userInput} is not a valid integer")
+                    # break
             randomNumber = random.randint(0,2) #Generate a random number
             choice = ["Rock 🧨", "Paper 📕", "Scissors ✂️"]
             botChoice = choice[randomNumber] #Match botchoice with the random integers generated
