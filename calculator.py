@@ -45,5 +45,6 @@ def calculator():
     except (EOFError, KeyboardInterrupt):
         print("\nGoodbye!")
         
+        
 if __name__ == "__main__":
     calculator()
