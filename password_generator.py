@@ -105,6 +105,8 @@ def generate_password(length=12, include_uppercase=True, include_numbers=True, i
 
 
 
+
+
 def get_user_requirements():
     length = int(input("Enter the password length: "))
     include_uppercase = input("Include uppercase letters? (y/n): ").lower() == 'y'
