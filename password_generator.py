@@ -47,5 +47,3 @@ if __name__ == "__main__":
 
     if generated_password:
         print("Generated Password:", generated_password)
-dddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
-dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
